@@ -1,4 +1,4 @@
 # CSC455_ProGreso
-Web Application and Internet Project.
+Web Application and Internet.
 
 
