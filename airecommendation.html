@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Recommendation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="landingpage.html">
+                <img src="Logo.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+            </a>
+            <a class="navbar-brand fs-3" href="landingpage.html">ProGreso</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- AI Recommendations Section -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">AI-Powered Goal Recommendations</h2>
+        <div class="card p-4">
+            <h4>Your Goal:</h4>
+            <p id="userGoal" class="lead">(Goal will be displayed here)</p>
+
+            <h4>AI Recommendations:</h4>
+            <ul id="recommendations" class="list-group mb-3">
+                <li class="list-group-item">Loading recommendations...</li>
+            </ul>
+            
+            <button class="btn btn-success w-100" onclick="generateRecommendations()">Refresh Recommendations</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p>&copy; 2025 ProGreso. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript for AI Recommendations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let storedGoal = localStorage.getItem("userGoal");
+            if (storedGoal) {
+                document.getElementById("userGoal").innerText = storedGoal;
+                generateRecommendations();
+            } else {
+                document.getElementById("userGoal").innerText = "No goal set. Go back and set a goal first!";
+            }
+        });
+
+        function generateRecommendations() {
+            const recommendationsList = document.getElementById("recommendations");
+            recommendationsList.innerHTML = "";
+
+            const sampleRecommendations = [
+                "Break your goal into smaller milestones.",
+                "Set daily or weekly progress targets.",
+                "Use time management techniques like the Pomodoro technique.",
+                "Seek mentorship or guidance from experts.",
+                "Stay consistent by tracking progress daily.",
+                "Use habit-forming strategies to stay on track.",
+                "Eliminate distractions and optimize your workspace.",
+                "Leverage online courses or books to gain more knowledge."
+            ];
+
+            for (let i = 0; i < 3; i++) {
+                let randomIndex = Math.floor(Math.random() * sampleRecommendations.length);
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.innerText = sampleRecommendations[randomIndex];
+                recommendationsList.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>
