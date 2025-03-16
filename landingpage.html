@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Landing Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            position: relative;
+            background: url('hero-image.jpg') no-repeat center center/cover;
+            height: 100vh; 
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="landingpage.html">
+                <img src="Logo.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+            <a class="navbar-brand fs-3" href="landingpage.html">ProGreso</a>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Full Background -->
+    <header class="hero-section">
+        <div class="hero-overlay"></div> 
+        <div class="hero-content">
+            <h1 class="display-4">Track Your Goals, Achieve More</h1>
+            <p class="lead">Set goals, monitor progress, and stay motivated with AI insights.</p>
+            <a href="create.html" class="btn btn-primary btn-lg">Get Started</a>
+
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h3>Set Goals</h3>
+                <p>Define clear and achievable goals to track your progress.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Analyze Progress</h3>
+                <p>View statistics and insights to stay on track.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>AI Recommendations</h3>
+                <p>Get smart suggestions to reach your goals faster.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3">
+        <p>&copy; 2025 ProGreso. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
