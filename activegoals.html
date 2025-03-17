@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Active Goals</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 20px; }
+        .popup {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 20px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); border-radius: 10px; text-align: center;
+        }
+        .popup button { margin: 10px; }
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="landingpage.html">
+                <img src="Logo.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+            </a>
+            <a class="navbar-brand fs-3" href="landingpage.html">ProGreso</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Active Goals</h2>
+
+        <div class="card p-4">
+            <h4>Goal: Learn Python</h4>
+            <p><strong>Progress:</strong> <span id="progressPython">Completed 50% of the course</span></p>
+            
+            <label class="form-label">Update Progress</label>
+            <textarea id="updatePython" class="form-control mb-3" rows="2" placeholder="Describe your progress..."></textarea>
+            <button class="btn btn-primary w-100" onclick="submitUpdate('Python')">Submit Update</button>
+        </div>
+
+        <div class="card p-4">
+            <h4>Goal: Lose 5 kg</h4>
+            <p><strong>Progress:</strong> <span id="progressLoseWeight">Lost 2 kg so far</span></p>
+            
+            <label class="form-label">Update Progress</label>
+            <textarea id="updateLoseWeight" class="form-control mb-3" rows="2" placeholder="Describe your progress..."></textarea>
+            <button class="btn btn-primary w-100" onclick="submitUpdate('LoseWeight')">Submit Update</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h4>What would you like to do next?</h4>
+        <button class="btn btn-success" onclick="redirectTo('airecommendation.html')">Get AI Recommendations</button>
+        <button class="btn btn-info" onclick="redirectTo('seeprogress.html')">See Progress</button>
+        <br>
+        <button class="btn btn-secondary mt-2" onclick="closePopup()">Close</button>
+    </div>
+
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        <p>&copy; 2025 ProGreso. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function submitUpdate(goalType) {
+            let updateField = document.getElementById("update" + goalType);
+            let progressField = document.getElementById("progress" + goalType);
+
+            if (updateField.value.trim() !== "") {
+                progressField.innerText = updateField.value;
+                updateField.value = ""; // Clear the input field after updating
+                showPopup();
+            } else {
+                alert("Please enter a progress update before submitting!");
+            }
+        }
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+    </script>
+
+</body>
+</html>
