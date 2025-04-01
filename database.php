@@ -17,4 +17,4 @@ if (!$conn->select_db($database)) {
 }
 
 echo "Connected to: " . $database;
-?> 
+?>
