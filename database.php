@@ -4,7 +4,7 @@ $user = "root";
 $password = ""; 
 $database = "progreso";
 
-$conn = new mysqli($host, $user, $password);
+$conn = new mysqli(hostname: $host, username: $user, password: $password);
 
 
 if ($conn->connect_error) {
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 
-if (!$conn->select_db($database)) {
+if (!$conn->select_db(database: $database)) {
     die("Database selection failed: " . $conn->error);
 }
 
