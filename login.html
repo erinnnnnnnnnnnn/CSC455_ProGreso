@@ -71,7 +71,14 @@
             // Redirect to home page after successful login
             window.location.href = "home.html"; // Change this to your actual home page
         }
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("success") === "1") {
+            alert("Account created successfully! Please log in.");
+        }
+
     </script>
 
+  
 </body>
 </html>

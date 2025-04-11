@@ -1,6 +1,5 @@
 <?php
-include 'database.php'; 
-
+include 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = trim($_POST["first_name"]);
@@ -9,36 +8,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
 
-    
+    // Validate inputs
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($confirmPassword)) {
-        die("All fields are required.");
+        header("Location: user_reg.html?error=empty");
+        exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Invalid email format.");
+        header("Location: user_reg.html?error=email");
+        exit();
     }
 
     if ($password !== $confirmPassword) {
-        die("Passwords do not match.");
+        header("Location: user_reg.html?error=nomatch");
+        exit();
     }
 
-   
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+  
+    $check = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $check->bind_param("s", $email);
+    $check->execute();
+    $result = $check->get_result();
 
-    
-    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)");
+    if ($result->num_rows > 0) {
+        header("Location: user_reg.html?error=exists");
+        exit();
+    }
+
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $fullName = $firstName . " " . $lastName;
+
+    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $fullName, $email, $hashedPassword);
 
     if ($stmt->execute()) {
-        echo "Account created successfully. <a href='login.html'>Log in now</a>.";
+        header("Location: login.html?success=1");
+        exit();
     } else {
-        echo "Error: " . $stmt->error;
+        header("Location: user_reg.html?error=server");
+        exit();
     }
-
-    $stmt->close();
-    $conn->close();
-} else {
-    echo "Invalid request.";
 }
 ?>
