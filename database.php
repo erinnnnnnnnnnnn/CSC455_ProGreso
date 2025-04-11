@@ -16,5 +16,4 @@ if (!$conn->select_db(database: $database)) {
     die("Database selection failed: " . $conn->error);
 }
 
-echo "Connected to: " . $database;
 ?>
