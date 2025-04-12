@@ -63,7 +63,7 @@
         <div class="hero-content">
             <h1 class="display-4">Track Your Goals, Achieve More</h1>
             <p class="lead">Set goals, monitor progress, and stay motivated with AI insights.</p>
-            <a href="create.html" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="user_reg.html" class="btn btn-primary btn-lg">Get Started</a>
 
         </div>
     </header>
@@ -93,6 +93,14 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("logout") === "1") {
+          alert("You have been logged out successfully.");
+        }
+      </script>
+    
 
 </body>
 </html>
