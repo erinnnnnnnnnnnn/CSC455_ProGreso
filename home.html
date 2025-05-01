@@ -6,9 +6,7 @@
   <title>Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    body {
-      background-color: #f8f9fa;
-    }
+    body { background-color: #f8f9fa; }
     .hero-section {
       background: url('progreso.jpg') no-repeat center center/cover;
       height: 60vh;
@@ -21,10 +19,8 @@
     }
     .hero-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.5);
     }
     .hero-content {
@@ -80,22 +76,22 @@
     <div class="col-md-8">
       <div class="card p-4">
         <h3>Set a New Goal</h3>
-        <form>
+        <form action="add_goal.php" method="POST">
           <div class="mb-3">
             <label class="form-label">Goal Title</label>
-            <input type="text" class="form-control" placeholder="Enter your goal">
+            <input type="text" class="form-control" name="title" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Description</label>
-            <textarea class="form-control" rows="3" placeholder="Describe your goal"></textarea>
+            <textarea class="form-control" name="description" rows="3" required></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label">Start Date</label>
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" name="start_date" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Target Date</label>
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" name="target_date" required>
           </div>
           <button type="submit" class="btn btn-primary w-100">Add Goal</button>
         </form>
@@ -105,16 +101,16 @@
 
   <div class="row mt-5">
     <div class="col-md-4">
-      <a href="completed_goals.html" class="btn btn-primary w-100 p-4">
+      <div class="btn btn-primary w-100 p-4">
         <h4>Goals Completed</h4>
         <p class="display-5">{{completed_goals}}</p>
-      </a>
+      </div>
     </div>
     <div class="col-md-4">
-      <a href="active_goals.html" class="btn btn-warning w-100 p-4">
+      <div class="btn btn-warning w-100 p-4">
         <h4>Active Goals</h4>
         <p class="display-5">{{active_goals}}</p>
-      </a>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="card p-4 text-center">
