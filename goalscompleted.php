@@ -23,7 +23,7 @@ while ($row = $result->fetch_assoc()) {
                  '</div>';
 }
 
-$html = file_get_contents("completed_goals.html");
+$html = file_get_contents("goalscompleted.html");
 $html = str_replace("{{completed_goals_list}}", $goalList, $html);
 
 echo $html;

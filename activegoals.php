@@ -26,7 +26,7 @@ while ($row = $result->fetch_assoc()) {
     </div>';
 }
 
-$html = file_get_contents("active_goals.html");
+$html = file_get_contents("activegoals.html");
 $html = str_replace("{{active_goals_list}}", $goalCards, $html);
 
 echo $html;
