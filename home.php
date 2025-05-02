@@ -34,17 +34,15 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-// Load HTML template
 $html = file_get_contents("home.html");
 
-// Replace placeholders
+
 $html = str_replace("{{user_name}}", htmlspecialchars($fullName), $html);
 $html = str_replace("{{profile_pic}}", htmlspecialchars($profilePic), $html);
 $html = str_replace("{{completed_goals}}", $completed, $html);
 $html = str_replace("{{active_goals}}", $active, $html);
 $html = str_replace("{{streak_days}}", $streak, $html);
 
-// Add goal added alert if redirected with success
 if (isset($_GET['goal_added']) && $_GET['goal_added'] == 1) {
     $html .= "<script>alert('Goal added successfully!');</script>";
 }
