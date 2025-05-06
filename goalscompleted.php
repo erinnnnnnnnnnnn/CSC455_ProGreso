@@ -122,7 +122,7 @@ while ($goal = $result->fetch_assoc()) {
             setTimeout(() => {
                 html2canvas(reportElement).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = title.replace(/\\s+/g, '_') + '_Progress_Report.png';
+                    link.download = title.replace(/\\s+/g, '') + 'ProgressReport.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     reportElement.style.display = 'none';
