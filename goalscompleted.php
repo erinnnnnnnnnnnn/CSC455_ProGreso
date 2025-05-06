@@ -61,7 +61,7 @@ while ($goal = $result->fetch_assoc()) {
         <p class='text-muted'>Completed on $targetDate</p>
         <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$title\")'>Download Progress Report (PNG)</button>
 
-        <div id='report_$goalId' style='display:none;'>
+        <div id='report_$goalId' style='display:none; background-color: white; padding: 10px;'>
             <h4>$title</h4>
             <p>Completed on $targetDate</p>
             <canvas id='chart_$goalId' height='150'></canvas>
@@ -88,9 +88,10 @@ while ($goal = $result->fetch_assoc()) {
 
             const tbody = document.getElementById(updateBodyId);
             tbody.innerHTML = '';
-            updates.forEach(update => {
+            updates.forEach((update, index) => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td></td>`;
+                const percent = progressValues[index] ?? '';
+                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td>\${percent}</td>`;
                 tbody.appendChild(tr);
             });
 
@@ -121,7 +122,7 @@ while ($goal = $result->fetch_assoc()) {
             setTimeout(() => {
                 html2canvas(reportElement).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = title.replace(/\s+/g, '_') + '_Progress_Report.png';
+                    link.download = title.replace(/\\s+/g, '_') + '_Progress_Report.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     reportElement.style.display = 'none';
