@@ -83,7 +83,7 @@ while ($goal = $result->fetch_assoc()) {
     <div class='card p-4 mb-4'>
         <h5>$escapedTitle</h5>
         <p class='text-muted'>$completionText</p>
-        <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$escapedTitle\")'>Download Progress Report (PNG)</button>
+        <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$escapedTitle\")'>Download Completion Report (PNG)</button>
 
         <div id='report_$goalId' style='display:none;'>
             <h4>$escapedTitle</h4>
