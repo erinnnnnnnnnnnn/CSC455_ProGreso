@@ -1,13 +1,13 @@
 # CSC455_ProGreso
 Web Application and Internet.
 
-![Screenshot 2025-03-17 160336](https://github.com/user-attachments/assets/8b6a924e-39c1-46bf-9271-415aaac967c9)
-![Screenshot 2025-03-17 160318](https://github.com/user-attachments/assets/e1722531-c2a1-4ce9-9bcb-627c25c0eaae)
-![Screenshot 2025-03-17 160212](https://github.com/user-attachments/assets/9e7c4b5d-6624-43c9-8a3e-5878af23655c)
-![Screenshot 2025-03-17 160509](https://github.com/user-attachments/assets/faa62c29-2d82-41ee-9087-056cbb11b16f)
-![Screenshot 2025-03-17 160443](https://github.com/user-attachments/assets/63a9442d-eae7-4c83-9f74-308b75b5c816)
-![Screenshot 2025-03-17 160427](https://github.com/user-attachments/assets/6a14bba4-1a27-4b1f-ae6f-f5d0d05098c1)
-![Screenshot 2025-03-17 160407](https://github.com/user-attachments/assets/57ee8293-3616-40d0-afc0-43e1d26e11f7)
-![Screenshot 2025-03-17 160350](https://github.com/user-attachments/assets/c00facdd-5a64-4e32-a91e-59097dab6777)
-![Screenshot 2025-03-17 160533](https://github.com/user-attachments/assets/f9e80a9c-eec8-43cf-bb19-816508feb093)
-![Screenshot 2025-03-17 160544](https://github.com/user-attachments/assets/a9aa1401-9de1-405d-a957-0119c5f198d4)
+![Screenshot 2025-05-07 233843](https://github.com/user-attachments/assets/863e4c50-092c-4801-9d94-7ad2ec67bc17)
+![Screenshot 2025-05-07 233831](https://github.com/user-attachments/assets/b3636085-bc8e-4e6f-806b-62618e394b3f)
+![Screenshot 2025-05-07 233810](https://github.com/user-attachments/assets/d6e53644-fdd4-4cd0-a4c4-7160ab926e2b)
+![Screenshot 2025-05-07 233755](https://github.com/user-attachments/assets/2cc202ad-cc97-43a5-a712-49f234286783)
+![Screenshot 2025-05-07 233739](https://github.com/user-attachments/assets/d1009396-906f-4ef7-91e6-7bdcd5aa7bf8)
+![Screenshot 2025-05-07 233936](https://github.com/user-attachments/assets/3f98e5f0-8113-4410-95d5-05067fb28517)
+![Screenshot 2025-05-07 233921](https://github.com/user-attachments/assets/dac45fc2-156b-4bc9-8b09-58d4ced94015)
+![Screenshot 2025-05-07 233900](https://github.com/user-attachments/assets/4faccc0e-b45d-4e04-9855-315a69534bc5)
+![Screenshot 2025-05-07 234008](https://github.com/user-attachments/assets/f495a7fd-f41e-4cd5-a219-04eecbeb039e)
+![Screenshot 2025-05-07 233953](https://github.com/user-attachments/assets/c14a5013-32d9-414b-a297-bd2832fabf55)
