@@ -84,7 +84,7 @@ while ($goal = $result->fetch_assoc()) {
             <button type="submit" class="btn btn-primary w-100 mb-2">Submit Update</button>
             <div class="d-flex justify-content-between">
                 <a href="seeprogress.php?goal_id=' . $goalId . '" class="btn btn-info w-49">See Progress</a>
-                <a href="airecommendation.php?goal_id=' . $goalId . '" class="btn btn-success w-49">AI Recommendation</a>
+                <a href="airecommendation.html?goal_id=' . $goalId . '" class="btn btn-success w-49">AI Recommendation</a>
             </div>
         </form>
 
