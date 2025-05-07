@@ -9,6 +9,7 @@ if (!isset($_SESSION["user_id"])) {
 
 $userId = $_SESSION["user_id"];
 
+// Fetch completed goals
 $sql = "SELECT goal_id, title, target_date FROM goals WHERE user_id = ? AND status = 'completed'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
@@ -20,9 +21,30 @@ $goalsOutput = "";
 while ($goal = $result->fetch_assoc()) {
     $goalId = $goal["goal_id"];
     $title = htmlspecialchars($goal["title"]);
-    $targetDate = htmlspecialchars($goal["target_date"]);
+    $targetDate = $goal["target_date"];
 
-    // Get progress data
+    // Get completion date (when progress reached 100%)
+    $completionSql = "SELECT updated_at FROM progress_tracking WHERE goal_id = ? AND progress_percent = 100 ORDER BY updated_at ASC LIMIT 1";
+    $completionStmt = $conn->prepare($completionSql);
+    $completionStmt->bind_param("i", $goalId);
+    $completionStmt->execute();
+    $completionStmt->bind_result($completionDate);
+    $completionStmt->fetch();
+    $completionStmt->close();
+
+    if (!$completionDate) {
+        $completionDate = $targetDate; // fallback
+    }
+
+    // Date formatting
+    $completionText = "Completed on " . htmlspecialchars($completionDate);
+    if ($completionDate > $targetDate) {
+        $completionText .= " <span style='color:red;'>(completed late)</span>";
+    } else {
+        $completionText .= " <span style='color:green;'>(on time)</span>";
+    }
+
+    // Get progress chart data
     $progressSql = "SELECT progress_percent, updated_at FROM progress_tracking WHERE goal_id = ? ORDER BY updated_at ASC";
     $progressStmt = $conn->prepare($progressSql);
     $progressStmt->bind_param("i", $goalId);
@@ -31,31 +53,12 @@ while ($goal = $result->fetch_assoc()) {
 
     $progressDates = [];
     $progressValues = [];
-    $completionDate = null;
 
     while ($row = $progressResult->fetch_assoc()) {
         $progressDates[] = $row['updated_at'];
         $progressValues[] = $row['progress_percent'];
-        if ((int)$row['progress_percent'] === 100) {
-            $completionDate = $row['updated_at']; // First 100% date
-            break;
-        }
     }
     $progressStmt->close();
-
-    // If no 100% was found, fallback to latest progress date
-    if (!$completionDate && !empty($progressDates)) {
-        $completionDate = end($progressDates);
-    }
-
-    // Still nothing? Fallback to target date (just to display something)
-    if (!$completionDate) {
-        $completionDate = $targetDate;
-    }
-
-
-    // Compare completion and target date
-    $completedLate = (strtotime($completionDate) > strtotime($targetDate));
 
     // Get update history
     $updateSql = "SELECT update_text, updated_at FROM goal_updates WHERE goal_id = ? ORDER BY updated_at ASC";
@@ -74,21 +77,17 @@ while ($goal = $result->fetch_assoc()) {
     $progressValuesJson = json_encode($progressValues);
     $updatesJson = json_encode($updates);
 
-    $lateText = $completedLate ? "<span style='color:red;'>(completed late)</span>" : "";
+    $escapedTitle = htmlspecialchars($title, ENT_QUOTES);
 
     $goalsOutput .= "
     <div class='card p-4 mb-4'>
-        <h5>$title</h5>
-        <p class='text-muted'>
-            Completed on " . date("Y-m-d", strtotime($completionDate)) . " 
-            (Target: <span style='color: " . ($completedLate ? "red" : "green") . ";'>" . date("Y-m-d", strtotime($targetDate)) . "</span>) 
-            $lateText
-        </p>
-        <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$title\")'>Download Progress Report (PNG)</button>
+        <h5>$escapedTitle</h5>
+        <p class='text-muted'>$completionText</p>
+        <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$escapedTitle\")'>Download Progress Report (PNG)</button>
 
         <div id='report_$goalId' style='display:none;'>
-            <h4>$title</h4>
-            <p>Completed on $completionDate</p>
+            <h4>$escapedTitle</h4>
+            <p>$completionText</p>
             <canvas id='chart_$goalId' height='150'></canvas>
             <h5 class='mt-3'>Update History</h5>
             <table class='table table-bordered'>
@@ -113,9 +112,10 @@ while ($goal = $result->fetch_assoc()) {
 
             const tbody = document.getElementById(updateBodyId);
             tbody.innerHTML = '';
-            updates.forEach(update => {
+            updates.forEach((update, index) => {
+                const progress = progressValues[index] !== undefined ? progressValues[index] : '';
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td></td>`;
+                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td>\${progress}</td>`;
                 tbody.appendChild(tr);
             });
 
@@ -146,7 +146,7 @@ while ($goal = $result->fetch_assoc()) {
             setTimeout(() => {
                 html2canvas(reportElement).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = title.replace(/\s+/g, '') + 'ProgressReport.png';
+                    link.download = title.replace(/\\s+/g, '') + 'ProgressReport.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     reportElement.style.display = 'none';
