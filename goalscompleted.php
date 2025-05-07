@@ -31,12 +31,31 @@ while ($goal = $result->fetch_assoc()) {
 
     $progressDates = [];
     $progressValues = [];
+    $completionDate = null;
 
     while ($row = $progressResult->fetch_assoc()) {
         $progressDates[] = $row['updated_at'];
         $progressValues[] = $row['progress_percent'];
+        if ((int)$row['progress_percent'] === 100) {
+            $completionDate = $row['updated_at']; // First 100% date
+            break;
+        }
     }
     $progressStmt->close();
+
+    // If no 100% was found, fallback to latest progress date
+    if (!$completionDate && !empty($progressDates)) {
+        $completionDate = end($progressDates);
+    }
+
+    // Still nothing? Fallback to target date (just to display something)
+    if (!$completionDate) {
+        $completionDate = $targetDate;
+    }
+
+
+    // Compare completion and target date
+    $completedLate = (strtotime($completionDate) > strtotime($targetDate));
 
     // Get update history
     $updateSql = "SELECT update_text, updated_at FROM goal_updates WHERE goal_id = ? ORDER BY updated_at ASC";
@@ -55,15 +74,21 @@ while ($goal = $result->fetch_assoc()) {
     $progressValuesJson = json_encode($progressValues);
     $updatesJson = json_encode($updates);
 
+    $lateText = $completedLate ? "<span style='color:red;'>(completed late)</span>" : "";
+
     $goalsOutput .= "
     <div class='card p-4 mb-4'>
         <h5>$title</h5>
-        <p class='text-muted'>Completed on $targetDate</p>
+        <p class='text-muted'>
+            Completed on " . date("Y-m-d", strtotime($completionDate)) . " 
+            (Target: <span style='color: " . ($completedLate ? "red" : "green") . ";'>" . date("Y-m-d", strtotime($targetDate)) . "</span>) 
+            $lateText
+        </p>
         <button class='btn btn-sm btn-primary' onclick='generateReport(\"$goalId\", \"$title\")'>Download Progress Report (PNG)</button>
 
-        <div id='report_$goalId' style='display:none; background-color: white; padding: 10px;'>
+        <div id='report_$goalId' style='display:none;'>
             <h4>$title</h4>
-            <p>Completed on $targetDate</p>
+            <p>Completed on $completionDate</p>
             <canvas id='chart_$goalId' height='150'></canvas>
             <h5 class='mt-3'>Update History</h5>
             <table class='table table-bordered'>
@@ -88,10 +113,9 @@ while ($goal = $result->fetch_assoc()) {
 
             const tbody = document.getElementById(updateBodyId);
             tbody.innerHTML = '';
-            updates.forEach((update, index) => {
+            updates.forEach(update => {
                 const tr = document.createElement('tr');
-                const percent = progressValues[index] ?? '';
-                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td>\${percent}</td>`;
+                tr.innerHTML = `<td>\${update.updated_at}</td><td>\${update.update_text}</td><td></td>`;
                 tbody.appendChild(tr);
             });
 
@@ -122,7 +146,7 @@ while ($goal = $result->fetch_assoc()) {
             setTimeout(() => {
                 html2canvas(reportElement).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = title.replace(/\\s+/g, '') + 'ProgressReport.png';
+                    link.download = title.replace(/\s+/g, '') + 'ProgressReport.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                     reportElement.style.display = 'none';
