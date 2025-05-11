@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($account = $result->fetch_assoc()) {
-        $storedPassword = $account["password_hash"]; // changed to password_hash as per your schema
+        $storedPassword = $account["password_hash"]; 
         $plainOK = ($password === $storedPassword);
         $hashOK = password_verify($password, $storedPassword);
 
@@ -36,9 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["full_name"] = $account["full_name"];
                 header("Location: home.php");
             } else {
-                $_SESSION["admin_id"] = $account["user_id"]; // admin_id is not present, so I used user_id
-                $_SESSION["admin_full_name"] = $account["full_name"]; // full_name instead of username
-                header("Location: admin.html");
+                $_SESSION["admin_id"] = $account["user_id"];
+                $_SESSION["admin_full_name"] = $account["full_name"]; 
+                header("Location: admin.php");
             }
             exit();
         }
