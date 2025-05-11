@@ -36,7 +36,6 @@
 <body class="d-flex justify-content-center align-items-center vh-100">
 
   <div class="login-container text-center">
-    <!-- Logo -->
     <img src="logo.png" alt="ProGreso Logo" width="80" />
     <h2 class="mt-2">ProGreso</h2>
 
@@ -48,11 +47,17 @@
       <div class="mb-3">
         <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
       </div>
+      <div class="mb-3">
+        <select name="user_type" class="form-select" required>
+          <option value="user" selected>User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 
     <!-- Create Account Option -->
-    <p class="mt-3">Don't have an account? <a href="user_reg.html">Create one</a></p>
+    <p class="mt-3">Don't have an account? <a href="user_reg.html">Create Account</a></p>
   </div>
 
   <!-- Bootstrap JS -->
@@ -71,7 +76,7 @@
     }
 
     if (params.get("error") === "empty") {
-      alert("Please enter both email and password.");
+      alert("Please enter all fields.");
     }
   </script>
 </body>
